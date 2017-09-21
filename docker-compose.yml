@@ -1,0 +1,28 @@
+version: '2'
+services:
+  hsapache:
+    build: apache2/
+    volumes:
+      - ./app:/app
+    ports:
+      - "8081:80"
+    links:
+      - hsphp
+  hsphp:
+    build: php7.1/
+    ports:
+      - "9001:9001"
+    volumes:
+      - ./app:/app
+  hsmysql:
+    image: mysql:latest
+    ports:
+      - "3306:3306"
+    volumes:
+      - ./mysql:/var/lib/mysql
+      - ./host:/host
+    environment:
+      MYSQL_ROOT_PASSWORD: wp
+      MYSQL_DATABASE: wp
+      MYSQL_USER: wp
+      MYSQL_PASSWORD: wp
